@@ -1,0 +1,6 @@
+@TaskManager_HostAddress = https://localhost:8080
+
+GET {{TaskManager_HostAddress}}/
+Accept: application/json
+
+###
