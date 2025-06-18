@@ -5,6 +5,7 @@ using TaskManager.Controllers.Contracts;
 using TaskManager.Models;
 using TaskManager.Utils;
 using TaskManager.Utils.Exceptions;
+using TaskManager.Utils.Extensions;
 
 namespace TaskManager.Services;
 
@@ -25,7 +26,7 @@ public class UsersService
 
     public async ValueTask<User> GetUser(ClaimsPrincipal user, CancellationToken token)
     {
-        var login = user.FindFirstValue(ClaimTypes.NameIdentifier)
+        var login = user.GetUserLogin()
             ?? throw new RestUnauthorizedException("Unable to read user login");
 
         return await GetUser(login, token);
@@ -42,8 +43,8 @@ public class UsersService
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.NameIdentifier, user.Login),
+            new Claim(UserClaimsPrincipalExtension.UserNameClaim, user.Name),
+            new Claim(UserClaimsPrincipalExtension.UserLoginClaim, user.Login),
         };
 
         var claimsPrincipal = new ClaimsPrincipal(
