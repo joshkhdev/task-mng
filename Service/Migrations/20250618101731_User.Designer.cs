@@ -10,8 +10,8 @@ using TaskManager.Models;
 namespace TaskManager.Migrations
 {
     [DbContext(typeof(TaskManagerDbContext))]
-    [Migration("20250617161047_UserPasswordHash")]
-    partial class UserPasswordHash
+    [Migration("20250618101731_User")]
+    partial class User
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,13 +30,11 @@ namespace TaskManager.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.HasKey("Login")
-                        .HasName("pK_users");
+                    b.HasKey("Login");
 
-                    b.HasIndex("Login")
-                        .HasDatabaseName("iX_users_login");
+                    b.HasIndex("Login");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("TaskManager.Models.User", b =>
@@ -44,26 +42,24 @@ namespace TaskManager.Migrations
                     b.OwnsOne("TaskManager.Models.PasswordHash", "Password", b1 =>
                         {
                             b1.Property<string>("UserLogin")
-                                .HasColumnType("TEXT")
-                                .HasColumnName("login");
+                                .HasColumnType("TEXT");
 
                             b1.Property<string>("Hash")
                                 .IsRequired()
                                 .HasColumnType("TEXT")
-                                .HasColumnName("password_Hash");
+                                .HasColumnName("password_hash");
 
                             b1.Property<string>("Salt")
                                 .IsRequired()
                                 .HasColumnType("TEXT")
-                                .HasColumnName("password_Salt");
+                                .HasColumnName("password_salt");
 
                             b1.HasKey("UserLogin");
 
                             b1.ToTable("users");
 
                             b1.WithOwner()
-                                .HasForeignKey("UserLogin")
-                                .HasConstraintName("fK_users_users_login");
+                                .HasForeignKey("UserLogin");
                         });
 
                     b.Navigation("Password")

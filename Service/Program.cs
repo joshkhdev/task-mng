@@ -35,9 +35,9 @@ builder.Services.AddDbContext<TaskManagerDbContext>(contextOptions =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Db");
 
-    contextOptions
-        .UseSqlite(connectionString, options => options.MigrationsHistoryTable("__EFMigrationsHistory"))
-        .UseCamelCaseNamingConvention();
+    contextOptions.UseSqlite(
+        connectionString,
+        options => options.MigrationsHistoryTable("__EFMigrationsHistory"));
 });
 
 builder.Services.AddScoped<UsersService>();

@@ -15,16 +15,17 @@ namespace TaskManager.Migrations
                 columns: table => new
                 {
                     login = table.Column<string>(type: "TEXT", nullable: false),
-                    password = table.Column<string>(type: "TEXT", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false)
+                    name = table.Column<string>(type: "TEXT", nullable: false),
+                    password_hash = table.Column<string>(type: "TEXT", nullable: false),
+                    password_salt = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pK_users", x => x.login);
+                    table.PrimaryKey("PK_users", x => x.login);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "iX_users_login",
+                name: "IX_users_login",
                 table: "users",
                 column: "login");
         }

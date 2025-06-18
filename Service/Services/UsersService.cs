@@ -17,21 +17,25 @@ public class UsersService
         _context = context;
     }
 
-    public async Task<User?> GetUser(string login, CancellationToken token)
+    public async Task<User> GetUser(string login, CancellationToken token)
     {
-        return await _context.Users.FindAsync(login, token);
+        return await _context.Users.FindAsync(login, token)
+            ?? throw new RestNotFoundException("User not found");
+    }
+
+    public async ValueTask<User> GetUser(ClaimsPrincipal user, CancellationToken token)
+    {
+        var login = user.FindFirstValue(ClaimTypes.NameIdentifier)
+            ?? throw new RestUnauthorizedException("Unable to read user login");
+
+        return await GetUser(login, token);
     }
 
     public async Task<ClaimsPrincipal> LoginUser(LoginUserRequest request, CancellationToken token)
     {
-        var user = await GetUser(request.Login, token);
+        var user = await _context.Users.FindAsync(request.Login, token);
 
-        if (user is null)
-        {
-            throw new RestUnauthorizedException("Invalid credentials");
-        }
-
-        if (!PasswordHelper.VerifyPassword(request.Password, user.Password))
+        if (user is null || !PasswordHelper.VerifyPassword(request.Password, user.Password))
         {
             throw new RestUnauthorizedException("Invalid credentials");
         }
@@ -55,7 +59,7 @@ public class UsersService
 
         if (userExists)
         {
-            throw new RestUnauthorizedException("User already registered");
+            throw new RestConflictException("User already registered");
         }
 
         var password = PasswordHelper.GetPasswordHash(request.Password);
