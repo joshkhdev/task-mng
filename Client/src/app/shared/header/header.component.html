@@ -1,0 +1,14 @@
+<div class="header">
+  <span class="app-name">TaskManager</span>
+  <nav>
+    <a mat-button routerLink="/">Главная</a>
+    <a mat-button routerLink="/tasks">Задачи</a>
+    <span class="spacer"></span>
+    @if (!hideRegister) {
+      <a mat-button routerLink="/auth/register">Зарегистрироваться</a>
+    }
+    @if (!hideLogin) {
+      <a mat-flat-button routerLink="/auth/login">Войти</a>
+    }
+  </nav>
+</div>

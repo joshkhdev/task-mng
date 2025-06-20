@@ -1,0 +1,31 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login {
+  padding: 16px;
+  width: min(300px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .subheader {
+    font-weight: 500;
+  }
+
+  form {
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

@@ -10,6 +10,7 @@ namespace TaskManager.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Produces("application/json")]
 public class UsersController : ControllerBase
 {
     private readonly UsersService _usersService;
@@ -20,7 +21,7 @@ public class UsersController : ControllerBase
     }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status409Conflict)]
     [HttpPost("register", Name = nameof(RegisterUser))]
     public async Task<IActionResult> RegisterUser([FromBody, Required] RegisterUserRequest request, CancellationToken cancellationToken)
     {
@@ -30,7 +31,7 @@ public class UsersController : ControllerBase
     }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [HttpPost("signin", Name = nameof(AuthSignIn))]
     public async Task<IActionResult> AuthSignIn([FromBody, Required] LoginUserRequest request, CancellationToken cancellationToken)
     {
@@ -51,7 +52,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [HttpGet("signout", Name = nameof(AuthSignOut))]
     public async Task<IActionResult> AuthSignOut()
     {
@@ -62,8 +63,8 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     [HttpGet(Name = nameof(GetUser))]
     public async Task<ActionResult<UserResponse>> GetUser([FromQuery, Required] string login, CancellationToken token)
     {
@@ -80,7 +81,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [HttpGet("current", Name = nameof(GetCurrentUser))]
     public async Task<ActionResult<UserResponse>> GetCurrentUser(CancellationToken token)
     {

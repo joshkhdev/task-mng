@@ -9,6 +9,7 @@ namespace TaskManager.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Produces("application/json")]
 public class TasksController : ControllerBase
 {
     private readonly TasksService _tasksService;
@@ -29,7 +30,7 @@ public class TasksController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     [HttpGet("{id:int}", Name = nameof(GetTaskInfo))]
     public async Task<ActionResult<TaskResponse>> GetTaskInfo(
         [FromRoute, Required] int id,
@@ -54,7 +55,7 @@ public class TasksController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     [HttpPatch("{id:int}", Name = nameof(UpdateTask))]
     public async Task<ActionResult<TaskResponse>> UpdateTask(
         [FromRoute, Required] int id,
@@ -68,7 +69,7 @@ public class TasksController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     [HttpDelete("{id:int}", Name = nameof(DeleteTask))]
     public async Task<ActionResult<TaskResponse>> DeleteTask(
         [FromRoute, Required] int id,
@@ -94,7 +95,7 @@ public class TasksController : ControllerBase
 
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     [HttpDelete("{taskId:int}/comments/{commentId:int}", Name = nameof(DeleteComment))]
     public async Task<ActionResult<TaskResponse>> DeleteComment(
         [FromRoute, Required] int taskId,

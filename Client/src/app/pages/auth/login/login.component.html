@@ -1,0 +1,39 @@
+<div class="login">
+  <span class="subheader">Войти в учётную запись</span>
+  <form [formGroup]="loginFormGroup">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Логин</mat-label>
+      <input
+        matInput
+        formControlName="login"
+        [required]="false"
+      >
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Пароль</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [required]="false"
+        [type]="showPassword() ? 'text' : 'password'"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="showPassword() ? 'Скрыть' : 'Показать'"
+        [attr.aria-pressed]="!showPassword()"
+      >
+        <mat-icon>{{ showPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="button"
+      (click)="login()"
+    >
+      Войти
+    </button>
+  </form>
+</div>

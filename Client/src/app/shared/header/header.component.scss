@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--mat-sys-primary-container);
+
+  .app-name {
+    font-weight: 500;
+    padding-inline: 8px;
+  }
+
+  nav {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+
+    .spacer {
+      flex-grow: 1;
+    }
+  }
+}
