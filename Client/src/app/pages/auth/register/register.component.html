@@ -1,1 +1,49 @@
-register works!
+<div class="register">
+  <span class="subheader">Зарегистрировать учётную запись</span>
+  <form [formGroup]="registerFormGroup">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Имя</mat-label>
+      <input
+        matInput
+        formControlName="name"
+      >
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Логин</mat-label>
+      <input
+        matInput
+        formControlName="login"
+      >
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Пароль</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="showPassword() ? 'text' : 'password'"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="showPassword() ? 'Скрыть' : 'Показать'"
+        [attr.aria-pressed]="!showPassword()"
+      >
+        <mat-icon>{{ showPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="button"
+      [disabled]="isLoading()"
+      (click)="register()"
+    >
+      @if (isLoading()) {
+        <mat-spinner [diameter]="24" />
+      } @else {
+        <span>Зарегистрироваться</span>
+      }
+    </button>
+  </form>
+</div>

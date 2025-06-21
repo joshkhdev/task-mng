@@ -26,13 +26,12 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class LoginComponent {
   public readonly showPassword = signal(false);
+  public readonly isLoading = signal(false);
 
   public readonly loginFormGroup: FormGroup<{
     login: FormControl<string>,
     password: FormControl<string>,
   }>;
-
-  public readonly isLoading = signal(false);
 
   constructor(
     private readonly authService: AuthService,
