@@ -5,8 +5,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { UsersApiService } from '../../../api/generated/services';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
 })
@@ -29,8 +32,10 @@ export class LoginComponent {
     password: FormControl<string>,
   }>;
 
+  public readonly isLoading = signal(false);
+
   constructor(
-    private readonly usersApi: UsersApiService,
+    private readonly authService: AuthService,
     private readonly router: Router,
     private readonly fb: FormBuilder,
   ) {
@@ -39,7 +44,6 @@ export class LoginComponent {
       password: this.fb.nonNullable.control('', Validators.required),
     });
   }
-
 
   public togglePasswordVisibility(): void {
     this.showPassword.update(v => !v);
@@ -50,7 +54,10 @@ export class LoginComponent {
       return;
     }
 
-    this.usersApi.authSignIn({ body: this.loginFormGroup.getRawValue() }).subscribe(() => {
+    this.isLoading.set(true);
+    this.authService.login(this.loginFormGroup.getRawValue()).pipe(
+      finalize(() => this.isLoading.set(false)),
+    ).subscribe(() => {
       this.router.navigateByUrl('/');
     });
   }

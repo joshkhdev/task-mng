@@ -5,8 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using TaskManager.Models;
 using TaskManager.Services;
 using TaskManager.Utils.Exceptions;
+using TaskManager.Utils.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    WebRootPath = Path.Combine("wwwroot", "browser"),
+});
 
 builder.Services
     .AddControllers()
@@ -21,10 +25,11 @@ builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.Cookie.Name = "TaskManager.AuthCookieAspNetCore";
-        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.Name = "TaskManager.AuthCookie";
         options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true;
         options.Events.OnRedirectToLogin = (context) =>
         {
@@ -72,10 +77,15 @@ else if (app.Environment.IsProduction())
     app.UseHttpsRedirection();
 }
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors(policy => policy
-    .AllowAnyOrigin()
     .AllowAnyMethod()
-    .AllowAnyHeader());
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(_ => true)
+    .AllowCredentials()
+    .Build());
 
 app.UseAuthentication();
 app.UseExceptionHandler();
@@ -84,4 +94,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapFallback("api/{**slug}", (context) =>
+{
+    context.Response.StatusCode = context.User.Identity?.IsAuthenticated == true
+        ? StatusCodes.Status404NotFound
+        : StatusCodes.Status401Unauthorized;
+
+    return Task.CompletedTask;
+});
+app.MapFallbackToFile("index.html");
+
+app.MigrateDatabase();
 app.Run();
