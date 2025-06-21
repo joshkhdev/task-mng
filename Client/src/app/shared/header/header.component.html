@@ -1,0 +1,28 @@
+<div class="header">
+  <span class="app-name">TaskManager</span>
+  <nav>
+    <a mat-button routerLink="/tasks">Задачи</a>
+    <span class="spacer"></span>
+    @if (authorized() && currentUser) {
+      <span class="username">{{ currentUser.name }}</span>
+      <button
+        mat-flat-button
+        [disabled]="isLoading()"
+        (click)="logout()"
+      >
+        @if (isLoading()) {
+          <mat-spinner [diameter]="24" />
+        } @else {
+          <span>Выйти</span>
+        }
+      </button>
+    } @else {
+      @if (!hideRegister) {
+        <a mat-button routerLink="/auth/register">Зарегистрироваться</a>
+      }
+      @if (!hideLogin) {
+        <a mat-flat-button routerLink="/auth/login">Войти</a>
+      }
+    }
+  </nav>
+</div>

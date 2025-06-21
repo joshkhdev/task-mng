@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../node_modules/ng-openapi-gen/ng-openapi-gen-schema.json",
+  "input": "http://localhost:8080/swagger/v1/swagger.json",
+  "output": "./src/app/api/generated",
+  "configuration": "ApiConfiguration",
+  "module": false,
+  "baseService": "ApiBaseService",
+  "serviceSuffix": "ApiService",
+  "requestBuilder": "ApiRequestBuilder",
+  "response": "ApiStrictHttpResponse",
+  "enumStyle": "pascal",
+  "ignoreUnusedModels": true,
+  "excludeTags": []
+}
