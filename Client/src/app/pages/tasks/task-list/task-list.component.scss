@@ -1,0 +1,18 @@
+.task-list {
+  padding: 8px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .actions {
+    padding-bottom: 8px;
+  }
+
+  .list {
+    padding-block: 8px;
+  }
+
+  .empty-message {
+
+  }
+}

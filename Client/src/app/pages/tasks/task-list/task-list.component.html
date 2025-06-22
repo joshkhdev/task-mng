@@ -1,1 +1,27 @@
-task-list works!
+<div class="task-list">
+  <div class="actions">
+    <a
+      mat-stroked-button
+      routerLink="./create"
+    >
+      Создать задачу
+    </a>
+  </div>
+  <mat-divider />
+  <div class="list">
+    @if (isLoading()) {
+      <mat-spinner />
+    } @else {
+      @for (task of tasks(); track task.id) {
+        <div class="task-card">
+          <span>{{task.id}}</span>
+          <span>{{task.name}}</span>
+          <span>{{task.status}}</span>
+          <span>{{task.plannedCompletionDate}}</span>
+        </div>
+      } @empty {
+        <div>Задач не найдено</div>
+      }
+    }
+  </div>
+</div>
