@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import { ApiConfiguration } from './api/generated/api-configuration';
 import { environment } from '../environments/environment';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,10 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         rootUrl: environment.apiUrl,
       },
-    }
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'ru-RU',
+    },
   ],
 };

@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +15,6 @@ import { AuthService } from '../../../shared/services/auth.service';
   styleUrl: './login.component.scss',
   imports: [
     MatButtonModule,
-    MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,

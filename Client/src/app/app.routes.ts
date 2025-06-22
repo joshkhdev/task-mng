@@ -5,7 +5,8 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { TaskListComponent } from './pages/tasks/task-list/task-list.component';
 import { authComponentGuard, authGuard } from './shared/guards/auth.guard';
-import { TaskEditComponent } from './pages/tasks/task-edit/task-edit.component';
+import { TaskInfoComponent } from './pages/tasks/task-info/task-info.component';
+import { TaskCreateComponent } from './pages/tasks/task-create/task-create.component';
 
 export const routes: Routes = [
   {
@@ -46,11 +47,11 @@ export const routes: Routes = [
       },
       {
         path: 'create',
-        component: TaskEditComponent,
+        component: TaskCreateComponent,
       },
       {
         path: ':id',
-        component: TaskEditComponent,
+        component: TaskInfoComponent,
       },
     ],
   },
