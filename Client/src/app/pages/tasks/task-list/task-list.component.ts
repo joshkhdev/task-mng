@@ -7,22 +7,28 @@ import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { TaskStatusNames } from '../../../shared/interfaces/task.interfaces';
+import { formatDateTime } from '../../../shared/utils/date.utils';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
   imports: [
-    RouterLink,
     MatButtonModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    RouterLink,
   ],
 })
 export class TaskListComponent implements OnInit {
+  public readonly isLoading = signal<boolean>(false);
+
   public readonly tasks = signal<TaskShortResponse[]>([]);
 
-  public readonly isLoading = signal<boolean>(false);
+  public readonly TaskStatusNames = TaskStatusNames;
+  public readonly formatDateTime = formatDateTime;
+
   constructor(
     private readonly tasksApi: TasksApiService,
     private readonly destroy: DestroyRef,

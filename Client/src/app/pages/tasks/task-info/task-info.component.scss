@@ -4,3 +4,24 @@
   flex-direction: column;
   align-items: center;
 }
+
+.task-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+
+  .subheader {
+    font-weight: 500;
+  }
+
+  .info {
+    padding: 8px;
+    border: 1px solid var(--mat-sys-outline);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+}

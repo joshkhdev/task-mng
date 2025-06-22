@@ -1,18 +1,19 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { TaskEntityStatus, TaskResponse } from '../../../api/generated/models';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TasksApiService } from '../../../api/generated/services';
 import { MatSelectModule } from '@angular/material/select';
 import { catchError, finalize, map, Observable, of, switchMap, take, throwError } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { formatDateTime, formatTimeSpent } from '../../../shared/utils/date.utils';
+import { TaskStatusNames } from '../../../shared/interfaces/task.interfaces';
 
 @Component({
   selector: 'app-task-info',
@@ -34,14 +35,13 @@ export class TaskInfoComponent implements OnInit {
   public readonly isError = signal<boolean>(false);
 
   public readonly TaskStatuses = TaskEntityStatus;
-  public readonly TaskStatusNames = {
-    [TaskEntityStatus.Created]: 'Создана',
-    [TaskEntityStatus.InProgress]: 'В работе',
-    [TaskEntityStatus.Completed]: 'Завершена',
-  }
+  public readonly TaskStatusNames = TaskStatusNames;
 
   public readonly taskInfo = signal<TaskResponse | undefined>(undefined);
   public readonly status = signal<TaskEntityStatus | undefined>(undefined);
+
+  public readonly formatDateTime = formatDateTime;
+  public readonly formatTimeSpent = formatTimeSpent;
 
   constructor(
     private readonly tasksApi: TasksApiService,

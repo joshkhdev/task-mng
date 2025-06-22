@@ -9,10 +9,21 @@
   }
 
   .list {
-    padding-block: 8px;
-  }
+    display: flex;
+    flex-direction: column;
 
-  .empty-message {
+    .task-card {
+      margin: 8px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      column-gap: 8px;
 
+      .link {
+        margin-left: auto;
+        margin-right: 8px;
+      }
+    }
   }
 }

@@ -7,19 +7,21 @@
       Создать задачу
     </a>
   </div>
-  <mat-divider />
   <div class="list">
     @if (isLoading()) {
       <mat-spinner />
     } @else {
       @for (task of tasks(); track task.id) {
+        <mat-divider />
         <div class="task-card">
-          <span>{{task.id}}</span>
-          <span>{{task.name}}</span>
-          <span>{{task.status}}</span>
-          <span>{{task.plannedCompletionDate}}</span>
+          <span>№{{ task.id }},</span>
+          <span>{{ task.name }},</span>
+          <span>{{ TaskStatusNames[task.status] }},</span>
+          <span>Планирумая дата завершения: {{ formatDateTime(task.plannedCompletionDate) }}</span>
+          <a mat-button [routerLink]="task.id.toString()" class="link">Подробнее</a>
         </div>
       } @empty {
+        <mat-divider />
         <div>Задач не найдено</div>
       }
     }
