@@ -1,1 +1,30 @@
-task-info works!
+<div class="task-info">
+  @if (isLoading()) {
+    <mat-spinner />
+  } @else if (isError()) {
+    <div>Не удалось получить информацию по задаче</div>
+  } @else {
+    @let task = taskInfo();
+    @if (task) {
+      <div class="subheader">№{{ task.id }}</div>
+      <div class="subheader">{{ task.name }}</div>
+      <div class="info">
+        <div class="task-status">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Статус</mat-label>
+            <mat-select [value]="status()" (valueChange)="changeStatus($event)">
+              <mat-option [value]="TaskStatuses.Created">{{ TaskStatusNames[TaskStatuses.Created] }}</mat-option>
+              <mat-option [value]="TaskStatuses.InProgress">{{ TaskStatusNames[TaskStatuses.InProgress] }}</mat-option>
+              <mat-option [value]="TaskStatuses.Completed">{{ TaskStatusNames[TaskStatuses.Completed] }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div><span class="subheader">Описание: </span>{{ task.description }}</div>
+        <div><span class="subheader">Дата создания: </span>{{ formatDateTime(task.creationDate) }}</div>
+        <div><span class="subheader">Ожидаемая дата завершения: </span>{{ formatDateTime(task.plannedCompletionDate) }}</div>
+        <div><span class="subheader">Дата завершения: </span>{{ task.completeDate ? formatDateTime(task.completeDate) : '-' }}</div>
+        <div><span class="subheader">Фактическое время на выполнение: </span>{{ task.actualTimeSpent ? formatTimeSpent(task.actualTimeSpent) : '-' }}</div>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,29 @@
+.task-list {
+  padding: 8px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .actions {
+    padding-bottom: 8px;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+
+    .task-card {
+      margin: 8px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      column-gap: 8px;
+
+      .link {
+        margin-left: auto;
+        margin-right: 8px;
+      }
+    }
+  }
+}

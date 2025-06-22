@@ -1,0 +1,50 @@
+<div class="task-create">
+  <span class="subheader">Создать новую задачу</span>
+  <form [formGroup]="taskCreateFormGroup">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Название</mat-label>
+      <input
+        matInput
+        formControlName="name"
+      >
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Описание</mat-label>
+      <input
+        matInput
+        formControlName="description"
+      >
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Ориентировочная дата завершения</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="plannedCompletionDate"
+      >
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-datepicker #picker />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ориентировочное время завершения</mat-label>
+      <input matInput
+        [matTimepicker]="timepicker"
+        formControlName="plannedCompletionDate"
+      >
+      <mat-timepicker #timepicker />
+      <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="button"
+      [disabled]="isLoading()"
+      (click)="create()"
+    >
+      @if (isLoading()) {
+        <mat-spinner [diameter]="24" />
+      } @else {
+        <span>Создать</span>
+      }
+    </button>
+  </form>
+</div>
